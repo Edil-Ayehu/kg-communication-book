@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "854688285338",
+    "project_id": "communication-book-43007",
+    "storage_bucket": "communication-book-43007.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:854688285338:android:2a5677f28ce5726000d523",
+        "android_client_info": {
+          "package_name": "com.example.communication_book"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAM3AsKDG01Tyv_1JLNtEyJkGxGYa7x4O8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
