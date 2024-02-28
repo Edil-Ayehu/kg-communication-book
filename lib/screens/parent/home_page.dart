@@ -154,7 +154,7 @@ class _HomePageState extends State<HomePage> {
                 _auth.signOut();
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => const LoginPage()),
+                  MaterialPageRoute(builder: (context) => LoginPage()),
                 );
               },
             ),

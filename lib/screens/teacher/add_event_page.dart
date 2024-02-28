@@ -68,21 +68,21 @@ class _AddEventPageState extends State<AddEventPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ModalProgressHUD(
-      inAsyncCall: showSpinner,
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.lightBlueAccent,
-          foregroundColor: Colors.white,
-          title: const Text(
-            'Add Event',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.lightBlueAccent,
+        foregroundColor: Colors.white,
+        title: const Text(
+          'Add Event',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
           ),
-          centerTitle: true,
         ),
-        body: Padding(
+        centerTitle: true,
+      ),
+      body: ModalProgressHUD(
+        inAsyncCall: showSpinner,
+        child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,

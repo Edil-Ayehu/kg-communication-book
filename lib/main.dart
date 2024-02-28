@@ -1,5 +1,4 @@
-import 'package:communication_book/screens/parent/upcoming_events_page.dart';
-import 'package:communication_book/screens/teacher/add_event_page.dart';
+import 'package:communication_book/screens/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -21,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const AddEventPage(), // You can change this to TeacherLoginPage() for the teacher side
+      home: LoginPage(), // You can change this to TeacherLoginPage() for the teacher side
     );
   }
 }
