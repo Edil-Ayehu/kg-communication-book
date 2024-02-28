@@ -1,3 +1,4 @@
+import 'package:communication_book/screens/parent/home_page.dart';
 import 'package:communication_book/screens/parent/parent_home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -132,7 +133,7 @@ class _LoginPageState extends State<LoginPage> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ParentHomePage()),
+                                builder: (context) => const HomePage()),
                           );
                         }
                         setState(() {
