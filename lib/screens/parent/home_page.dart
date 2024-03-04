@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
         }
       } catch (e) {
         // Handle any errors
-        print('Error fetching child data: $e');
+        debugPrint('Error fetching child data: $e');
         throw e; // Re-throw the error
       }
     }
@@ -64,26 +64,31 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
       ),
       drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.green,
-                image: DecorationImage(
-                  image: AssetImage('assets/kg.jpg'),
-                  fit: BoxFit.cover,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              children: [
+                const SizedBox(
+                  width: double.infinity,
+                  child: DrawerHeader(
+                    decoration: BoxDecoration(
+                      color: Colors.green,
+                      image: DecorationImage(
+                        image: AssetImage('assets/kg.jpg'),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    child: Text(
+                      '',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-              child: Text(
-                '',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
-            ),
-            ListTile(
+                ListTile(
               leading: const Icon(Icons.person),
               title: const Text('Child Details',
                   style: TextStyle(
@@ -144,6 +149,9 @@ class _HomePageState extends State<HomePage> {
                 );
               },
             ),
+              ],
+            ),
+            
             ListTile(
               leading: const Icon(Icons.logout),
               title: const Text('Logout',

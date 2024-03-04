@@ -1,3 +1,4 @@
+import 'package:communication_book/screens/admin/admin_home_page.dart';
 import 'package:communication_book/screens/parent/home_page.dart';
 import 'package:communication_book/screens/teacher/teacher_home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -199,6 +200,13 @@ class _LoginPageState extends State<LoginPage> {
             context,
             MaterialPageRoute(
               builder: (context) => TeacherHomePage(),
+            ),
+          );
+        } else if (documentSnapshot.get('role') == "admin") {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AdminHomePage(),
             ),
           );
         } else {

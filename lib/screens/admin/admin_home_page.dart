@@ -1,24 +1,29 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:communication_book/screens/chat_page.dart';
 import 'package:communication_book/screens/login_page.dart';
 import 'package:communication_book/screens/parent/about_page.dart';
-import 'package:communication_book/screens/teacher/add_event_page.dart';
+import 'package:communication_book/screens/parent/upcoming_events_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class TeacherHomePage extends StatelessWidget {
-  TeacherHomePage({super.key});
+class AdminHomePage extends StatelessWidget {
+  AdminHomePage({super.key});
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.lightBlueAccent,
+        backgroundColor: Colors.lightBlueAccent[100],
         foregroundColor: Colors.white,
-        title: const Text('Teacher Dashboard'),
+        elevation: 2,
+        title: const Text(
+          'Admin',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
       ),
       drawer: Drawer(
         child: Column(
@@ -46,54 +51,41 @@ class TeacherHomePage extends StatelessWidget {
                   ),
                 ),
                 ListTile(
+                  leading: const Icon(Icons.calendar_month_outlined),
+                  title: const Text('Students',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      )),
+                  onTap: () {},
+                ),
+                ListTile(
+                  leading: const Icon(Icons.info),
+                  title: const Text('Teachers',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      )),
+                  onTap: () {},
+                ),
+                ListTile(
+                  leading: const Icon(Icons.person),
+                  title: const Text('Add Student',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      )),
+                  onTap: () {
+                    // Navigate to child details page
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
                   leading: const Icon(Icons.chat_rounded),
                   title: const Text(
-                    'Chat',
+                    'Add Teacher',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  onTap: () {
-                    // Navigate to communication page
-                    Navigator.pop(context);
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const ChatPage(),
-                      ),
-                    );
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.calendar_month_outlined),
-                  title: const Text('Add Event',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      )),
-                  onTap: () {
-                    // Navigate to calendar page
-                    Navigator.pop(context);
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const AddEventPage(),
-                      ),
-                    );
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.info),
-                  title: const Text('About Us',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      )),
-                  onTap: () {
-                    // Navigate to settings page
-                    Navigator.pop(context);
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const AboutPage(),
-                      ),
-                    );
-                  },
+                  onTap: () {},
                 ),
               ],
             ),
@@ -114,9 +106,6 @@ class TeacherHomePage extends StatelessWidget {
             ),
           ],
         ),
-      ),
-      body: const Center(
-        child: Text('Teacher Dashboard'),
       ),
     );
   }
