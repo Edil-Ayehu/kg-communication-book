@@ -17,6 +17,7 @@ dependencies:
   url_launcher: 
   intl:
   get: 
+  provider: 
 
   flutter:
     sdk: flutter

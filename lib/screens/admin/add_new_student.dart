@@ -37,140 +37,121 @@ class _AddNewStudentState extends State<AddNewStudent> {
   FirebaseAuth _auth = FirebaseAuth.instance;
   bool _showSpinner = false;
 
-  Future<void> _addParent() async {
-    setState(() {
-      _showSpinner = true;
-    });
+Future<void> _addParent() async {
+  setState(() {
+    _showSpinner = true;
+  });
 
-    String email = _emailController.text.trim();
-    String password = _passwordController.text.trim();
-    String name = _nameController.text.trim();
-    String childName = _childNameController.text.trim();
-    int childAge = int.tryParse(_childAgeController.text.trim()) ?? 0;
-    String childAllergies = _childAllergiesController.text.trim();
-    String childGender = _childGenderController.text.trim();
-    String childGrade = _childGradeController.text.trim();
-    String childHeight = _childHeightController.text.trim();
-    String childImageUrl = _childImageUrlController.text.trim();
-    String childMedicalCondition = _childMedicalConditionController.text.trim();
-    String childMedications = _childMedicationsController.text.trim();
-    String childPPhoneNo = _childPPhoneNoController.text.trim();
-    String childRelationship = _childRelationshipController.text.trim();
-    String childWeight = _childWeightController.text.trim();
+  String email = _emailController.text.trim();
+  String password = _passwordController.text.trim();
+  String name = _nameController.text.trim();
+  String childName = _childNameController.text.trim();
+  int childAge = int.tryParse(_childAgeController.text.trim()) ?? 0;
+  String childAllergies = _childAllergiesController.text.trim();
+  String childGender = _childGenderController.text.trim();
+  String childGrade = _childGradeController.text.trim();
+  String childHeight = _childHeightController.text.trim();
+  String childImageUrl = _childImageUrlController.text.trim();
+  String childMedicalCondition = _childMedicalConditionController.text.trim();
+  String childMedications = _childMedicationsController.text.trim();
+  String childPPhoneNo = _childPPhoneNoController.text.trim();
+  String childRelationship = _childRelationshipController.text.trim();
+  String childWeight = _childWeightController.text.trim();
 
-    if (email.isNotEmpty &&
-        password.isNotEmpty &&
-        name.isNotEmpty &&
-        childName.isNotEmpty &&
-        childAge > 0) {
-      try {
-        // Create user account with email and password
-        UserCredential userCredential =
-            await _auth.createUserWithEmailAndPassword(
-          email: email,
-          password: password,
-        );
+  if (email.isNotEmpty &&
+      password.isNotEmpty &&
+      name.isNotEmpty &&
+      childName.isNotEmpty &&
+      childAge > 0) {
+    try {
+      // Create user account with email and password
+      UserCredential userCredential =
+          await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
 
-        // Get the newly created user's ID
-        String userId = userCredential.user!.uid;
+      // Get the newly created user's ID
+      String userId = userCredential.user!.uid;
 
-        // Get a reference to the parents collection
-        CollectionReference parentsCollection =
-            FirebaseFirestore.instance.collection('parents');
+      // Get a reference to the parents collection
+      CollectionReference parentsCollection =
+          FirebaseFirestore.instance.collection('parents');
 
-        // Add a new document with the user ID
-        DocumentReference newParentRef = parentsCollection.doc(userId);
-        await newParentRef.set({
-          'email': email,
-          'name': name,
-          'role': 'parent',
-        });
+      // Add a new document with the user ID
+      DocumentReference newParentRef = parentsCollection.doc(userId);
+      await newParentRef.set({
+        'uid': userId, // Store the user ID in the document
+        'email': email,
+        'name': name,
+        'role': 'parent',
+      });
 
-        // Add child data to the child subcollection
-        CollectionReference childCollection = newParentRef.collection('child');
-        await childCollection.add({
-          'name': childName,
-          'age': childAge,
-          'allergies': childAllergies,
-          'gender': childGender,
-          'grade': childGrade,
-          'height': childHeight,
-          'imageUrl': childImageUrl,
-          'medical condition': childMedicalCondition,
-          'medications': childMedications,
-          'p_phoneNo': childPPhoneNo,
-          'relationship': childRelationship,
-          'weight': childWeight,
-          'p_email': email,
-          'parent name': name,
-          // Add more child data fields as needed
-        });
+      // Add child data to the child subcollection
+      CollectionReference childCollection = newParentRef.collection('child');
+      await childCollection.add({
+        'name': childName,
+        'age': childAge,
+        'allergies': childAllergies,
+        'gender': childGender,
+        'grade': childGrade,
+        'height': childHeight,
+        'imageUrl': childImageUrl,
+        'medical condition': childMedicalCondition,
+        'medications': childMedications,
+        'p_phoneNo': childPPhoneNo,
+        'relationship': childRelationship,
+        'weight': childWeight,
+        'p_email': email,
+        'parent name': name,
+        // Add more child data fields as needed
+      });
 
-        // Show success dialog
-        // ignore: use_build_context_synchronously
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text('Success'),
-              content: const Text('New parent and child added successfully.'),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
+      // Show success dialog
+      // ignore: use_build_context_synchronously
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Success'),
+            content: const Text('New parent and child added successfully.'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
 
-        // Clear input fields after success
-        _emailController.clear();
-        _passwordController.clear();
-        _nameController.clear();
-        _childNameController.clear();
-        _childAgeController.clear();
-        _childAllergiesController.clear();
-        _childGenderController.clear();
-        _childGradeController.clear();
-        _childHeightController.clear();
-        _childImageUrlController.clear();
-        _childMedicalConditionController.clear();
-        _childMedicationsController.clear();
-        _childPPhoneNoController.clear();
-        _childRelationshipController.clear();
-        _childWeightController.clear();
-      } catch (e) {
-        // Show error dialog
-        // ignore: use_build_context_synchronously
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text('Error'),
-              content: Text('Failed to add parent and child: $e'),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
-      }
-    } else {
-      // Show error dialog for missing fields
+      // Clear input fields after success
+      _emailController.clear();
+      _passwordController.clear();
+      _nameController.clear();
+      _childNameController.clear();
+      _childAgeController.clear();
+      _childAllergiesController.clear();
+      _childGenderController.clear();
+      _childGradeController.clear();
+      _childHeightController.clear();
+      _childImageUrlController.clear();
+      _childMedicalConditionController.clear();
+      _childMedicationsController.clear();
+      _childPPhoneNoController.clear();
+      _childRelationshipController.clear();
+      _childWeightController.clear();
+    } catch (e) {
+      // Show error dialog
+      // ignore: use_build_context_synchronously
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('Error'),
-            content: const Text('Please fill in all fields correctly.'),
+            content: Text('Failed to add parent and child: $e'),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
@@ -183,11 +164,32 @@ class _AddNewStudentState extends State<AddNewStudent> {
         },
       );
     }
-
-    setState(() {
-      _showSpinner = false;
-    });
+  } else {
+    // Show error dialog for missing fields
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Error'),
+          content: const Text('Please fill in all fields correctly.'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
+
+  setState(() {
+    _showSpinner = false;
+  });
+}
+
 
   @override
   Widget build(BuildContext context) {

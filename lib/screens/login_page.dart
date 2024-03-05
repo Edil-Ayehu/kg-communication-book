@@ -4,6 +4,7 @@ import 'package:communication_book/screens/teacher/teacher_home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -196,26 +197,11 @@ class _LoginPageState extends State<LoginPage> {
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
         if (documentSnapshot.get('role') == "teacher") {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => TeacherHomePage(),
-            ),
-          );
+          Get.to(TeacherHomePage());
         } else if (documentSnapshot.get('role') == "admin") {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => AdminHomePage(),
-            ),
-          );
+           Get.to(AdminHomePage());
         } else {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const HomePage(),
-            ),
-          );
+          Get.to(HomePage());
         }
       } else {
         debugPrint('Document does not exist on the database');

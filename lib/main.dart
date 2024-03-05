@@ -1,4 +1,4 @@
-import 'package:communication_book/screens/login_page.dart';
+import 'package:communication_book/services/auth_gate.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const LoginPage(), // You can change this to TeacherLoginPage() for the teacher side
+      home: const AuthGate(), // You can change this to TeacherLoginPage() for the teacher side
     );
   }
 }

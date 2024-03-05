@@ -1,15 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:communication_book/components/user_tile.dart';
 import 'package:communication_book/screens/chat_page.dart';
 import 'package:communication_book/screens/login_page.dart';
 import 'package:communication_book/screens/parent/about_page.dart';
+import 'package:communication_book/services/auth_service.dart';
+import 'package:communication_book/services/chat_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class TeacherHomePage extends StatelessWidget {
   TeacherHomePage({super.key});
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  final ChatService _chatService = ChatService();
+  final AuthService _authService = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -45,21 +52,15 @@ class TeacherHomePage extends StatelessWidget {
                   ),
                 ),
                 ListTile(
-                  leading: const Icon(Icons.chat_rounded),
+                  leading: const Icon(Icons.home_outlined),
                   title: const Text(
-                    'Chat',
+                    'Home',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   onTap: () {
-                    // Navigate to communication page
                     Navigator.pop(context);
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const ChatPage(),
-                      ),
-                    );
                   },
                 ),
                 ListTile(
@@ -98,9 +99,50 @@ class TeacherHomePage extends StatelessWidget {
           ],
         ),
       ),
-      body: const Center(
-        child: Text('Teacher Dashboard'),
-      ),
+      body: _buildUserList(),
     );
+  }
+
+  Widget _buildUserList() {
+    return StreamBuilder(
+      stream: _chatService.getUserStream(),
+      builder: (context, snapshot) {
+        // error
+        if (snapshot.hasError) {
+          return const Text("Error");
+        }
+
+        // loading...
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Text("Loading...");
+        }
+
+        //return list view
+        return ListView(
+          children: snapshot.data!
+              .map<Widget>((userData) => _buildUserListItem(userData, context))
+              .toList(),
+        );
+      },
+    );
+  }
+
+  Widget _buildUserListItem(
+      Map<String, dynamic> userData, BuildContext context) {
+    // display all users except current user
+    if (userData['email'] != _authService.getCurrentUser()!.email) {
+      return UserTile(
+        text: userData['email'],
+        onTap: () {
+          // tapped on a user -> go to chat page
+          Get.to(ChatPage(
+            receiverEmail: userData['email'],
+            receiverID: userData['uid'],
+          ));
+        },
+      );
+    } else {
+      return Container();
+    }
   }
 }
