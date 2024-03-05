@@ -5,6 +5,7 @@ import 'package:communication_book/screens/parent/upcoming_events_page.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -89,69 +90,56 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 ListTile(
-              leading: const Icon(Icons.person),
-              title: const Text('Child Details',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  )),
-              onTap: () {
-                // Navigate to child details page
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.chat_rounded),
-              title: const Text(
-                'Chat',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
+                  leading: const Icon(Icons.person),
+                  title: const Text('Child Details',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      )),
+                  onTap: () {
+                    // Navigate to child details page
+                    Navigator.pop(context);
+                  },
                 ),
-              ),
-              onTap: () {
-                // Navigate to communication page
-                Navigator.pop(context);
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const ChatPage(),
+                ListTile(
+                  leading: const Icon(Icons.chat_rounded),
+                  title: const Text(
+                    'Chat',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                );
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.calendar_month_outlined),
-              title: const Text('Upcoming Events',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  )),
-              onTap: () {
-                // Navigate to calendar page
-                Navigator.pop(context);
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const CalendarPage(),
-                  ),
-                );
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.info),
-              title: const Text('About Us',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  )),
-              onTap: () {
-                // Navigate to settings page
-                Navigator.pop(context);
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const AboutPage(),
-                  ),
-                );
-              },
-            ),
+                  onTap: () {
+                    // Navigate to communication page
+                    Navigator.pop(context);
+                    Get.to(const ChatPage());
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.calendar_month_outlined),
+                  title: const Text('Upcoming Events',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      )),
+                  onTap: () {
+                    // Navigate to calendar page
+                    Navigator.pop(context);
+                    Get.to(const CalendarPage());
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.info),
+                  title: const Text('About Us',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      )),
+                  onTap: () {
+                    // Navigate to settings page
+                    Navigator.pop(context);
+                    Get.to(const AboutPage());
+                  },
+                ),
               ],
             ),
-            
             ListTile(
               leading: const Icon(Icons.logout),
               title: const Text('Logout',
@@ -159,12 +147,8 @@ class _HomePageState extends State<HomePage> {
                     fontWeight: FontWeight.bold,
                   )),
               onTap: () {
-                // Navigate to settings page
                 _auth.signOut();
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginPage()),
-                );
+                Get.to(const LoginPage());
               },
             ),
           ],
@@ -210,7 +194,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     Text(
                       '${childData['grade']} student',
-                      style: TextStyle(fontSize: 16.0,color: Colors.grey[400]),
+                      style: TextStyle(fontSize: 16.0, color: Colors.grey[400]),
                     ),
                     const SizedBox(height: 15.0),
                     Row(
@@ -350,9 +334,19 @@ class _HomePageState extends State<HomePage> {
                     Card(
                       color: Colors.lightBlueAccent[100],
                       child: ListTile(
-                        leading: const Icon(Icons.person,color: Colors.white,),
-                        title: Text('${childData['parent name']}',style: const TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
-                        subtitle: Text('${childData['relationship']}',style: const TextStyle(color: Colors.white),),
+                        leading: const Icon(
+                          Icons.person,
+                          color: Colors.white,
+                        ),
+                        title: Text(
+                          '${childData['parent name']}',
+                          style: const TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Text(
+                          '${childData['relationship']}',
+                          style: const TextStyle(color: Colors.white),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 20.0),
@@ -434,17 +428,32 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(height: 10.0),
                     ListTile(
                       leading: const Icon(Icons.medical_services),
-                      title: const Text('Allergies',style: TextStyle(fontWeight: FontWeight.bold,),),
+                      title: const Text(
+                        'Allergies',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       subtitle: Text('${childData['allergies']}'),
                     ),
                     ListTile(
                       leading: const Icon(Icons.medical_services),
-                      title: const Text('Medical Conditions',style: TextStyle(fontWeight: FontWeight.bold,),),
+                      title: const Text(
+                        'Medical Conditions',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       subtitle: Text('${childData['medical condition']}'),
                     ),
                     ListTile(
                       leading: const Icon(Icons.medical_services),
-                      title: const Text('Medications',style: TextStyle(fontWeight: FontWeight.bold,),),
+                      title: const Text(
+                        'Medications',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       subtitle: Text('${childData['medications']}'),
                     ),
                     // Add more child details as needed

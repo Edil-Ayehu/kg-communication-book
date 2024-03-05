@@ -16,6 +16,7 @@ dependencies:
   table_calendar: 
   url_launcher: 
   intl:
+  get: 
 
   flutter:
     sdk: flutter

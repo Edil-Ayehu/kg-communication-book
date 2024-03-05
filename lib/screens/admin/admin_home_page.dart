@@ -1,9 +1,10 @@
-import 'package:communication_book/screens/chat_page.dart';
+import 'package:communication_book/screens/admin/add_new_student.dart';
+import 'package:communication_book/screens/admin/all_students.dart';
 import 'package:communication_book/screens/login_page.dart';
-import 'package:communication_book/screens/parent/about_page.dart';
-import 'package:communication_book/screens/parent/upcoming_events_page.dart';
+import 'package:communication_book/screens/teacher/add_event_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AdminHomePage extends StatelessWidget {
   AdminHomePage({super.key});
@@ -52,15 +53,18 @@ class AdminHomePage extends StatelessWidget {
                 ),
                 ListTile(
                   leading: const Icon(Icons.calendar_month_outlined),
-                  title: const Text('Students',
+                  title: const Text('Manage Students',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                       )),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pop(context);
+                    Get.to(const AllStudents());
+                  },
                 ),
                 ListTile(
                   leading: const Icon(Icons.info),
-                  title: const Text('Teachers',
+                  title: const Text('Manage Teachers',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                       )),
@@ -75,6 +79,7 @@ class AdminHomePage extends StatelessWidget {
                   onTap: () {
                     // Navigate to child details page
                     Navigator.pop(context);
+                    Get.to(const AddNewStudent());
                   },
                 ),
                 ListTile(
@@ -87,6 +92,18 @@ class AdminHomePage extends StatelessWidget {
                   ),
                   onTap: () {},
                 ),
+                ListTile(
+                  leading: const Icon(Icons.calendar_month_outlined),
+                  title: const Text('Add Event',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      )),
+                  onTap: () {
+                    // Navigate to calendar page
+                    Navigator.pop(context);
+                    Get.to(const AddEventPage());
+                  },
+                ),
               ],
             ),
             ListTile(
@@ -98,10 +115,7 @@ class AdminHomePage extends StatelessWidget {
               onTap: () {
                 // Navigate to settings page
                 _auth.signOut();
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginPage()),
-                );
+                Get.to(const LoginPage());
               },
             ),
           ],

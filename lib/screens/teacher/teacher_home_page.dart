@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:communication_book/screens/chat_page.dart';
 import 'package:communication_book/screens/login_page.dart';
 import 'package:communication_book/screens/parent/about_page.dart';
-import 'package:communication_book/screens/teacher/add_event_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -59,22 +58,6 @@ class TeacherHomePage extends StatelessWidget {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => const ChatPage(),
-                      ),
-                    );
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.calendar_month_outlined),
-                  title: const Text('Add Event',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      )),
-                  onTap: () {
-                    // Navigate to calendar page
-                    Navigator.pop(context);
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const AddEventPage(),
                       ),
                     );
                   },
